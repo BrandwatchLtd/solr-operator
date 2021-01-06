@@ -19,13 +19,15 @@
 
 replicaCount: 1
 
+namespace: solr0
+
 image:
   repository: apache/solr-operator
   tag: v0.4.0-prerelease
   pullPolicy: IfNotPresent
 
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: "solr-operator"
+fullnameOverride: "solr-operator"
 
 zookeeper-operator:
   # Include the zookeeper-operator as a helm chart dependency.
@@ -69,7 +71,11 @@ labels: {}
 annotations: {}
 nodeSelector: {}
 affinity: {}
-tolerations: []
+tolerations:
+  - effect: NoSchedule
+    key: solr
+    operator: Equal
+    value: "true"
 priorityClassName: ""
 sidecarContainers: []
 
