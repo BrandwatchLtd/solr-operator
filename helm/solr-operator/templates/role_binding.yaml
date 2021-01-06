@@ -13,6 +13,6 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "solr-operator.serviceAccountName" $ }}
-    namespace: {{ $.Release.Namespace }}
+    namespace: {{ $namespace }}
 {{- end }}
 {{- end }}

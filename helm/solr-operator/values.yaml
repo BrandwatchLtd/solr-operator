@@ -4,20 +4,22 @@
 
 replicaCount: 1
 
+namespace: solr0
+
 image:
   repository: bloomberg/solr-operator
   tag: v0.2.7
   pullPolicy: Always
 
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: "solr-operator"
+fullnameOverride: "solr-operator"
 
 useZkOperator: "true"
 ingressBaseDomain: ""
 
 # A comma-separated list of namespaces that the operator should watch.
 # If empty, the solr operator will watch all namespaces in the cluster.
-watchNamespaces: ""
+watchNamespaces: "solr0"
 
 rbac:
   # Specifies whether RBAC resources should be created
