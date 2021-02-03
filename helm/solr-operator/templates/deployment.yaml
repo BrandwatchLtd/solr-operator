@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "solr-operator.fullname" . }}
-  namespace: {{ .Values.namespace }}
   labels:
     control-plane: solr-operator
     controller-tools.k8s.io: "1.0"

@@ -7,7 +7,6 @@ kind: {{ include "solr-operator.roleType" $ }}
 metadata:
   creationTimestamp: null
   name: {{ include "solr-operator.fullname" $ }}-role
-  namespace: {{ $namespace }}
 rules:
 - apiGroups:
   - ""
