@@ -20,7 +20,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: {{ include "solr-operator.roleType" $ }}Binding
 metadata:
   name: {{ include "solr-operator.fullname" $ }}-rolebinding
-  namespace: {{ $namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: {{ include "solr-operator.roleType" $ }}
@@ -28,6 +27,6 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "solr-operator.serviceAccountName" $ }}
-    namespace: {{ $namespace }}
+    namespace: {{ $.Release.Namespace }}
 {{- end }}
 {{- end }}
