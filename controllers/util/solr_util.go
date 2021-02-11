@@ -452,8 +452,15 @@ func GenerateStatefulSet(solrCloud *solr.SolrCloud, solrCloudStatus *solr.SolrCl
 	}
 
 	if solrCloud.Spec.SolrImage.ImagePullSecret != "" {
-		stateful.Spec.Template.Spec.ImagePullSecrets = []corev1.LocalObjectReference{
-			{Name: solrCloud.Spec.SolrImage.ImagePullSecret},
+		if nil != customPodOptions {
+			stateful.Spec.Template.Spec.ImagePullSecrets = append(
+				customPodOptions.ImagePullSecrets,
+				{Name: solrCloud.Spec.SolrImage.ImagePullSecret}
+			)
+		} else {
+			stateful.Spec.Template.Spec.ImagePullSecrets = []corev1.LocalObjectReference{
+				{Name: solrCloud.Spec.SolrImage.ImagePullSecret},
+			}
 		}
 	}
 
