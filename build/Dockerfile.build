@@ -27,6 +27,7 @@ COPY controllers/ controllers/
 
 ARG VERSION
 ARG GIT_SHA
+ARG BIN
 
 # Build
 RUN CGO_ENABLED=0 make build
