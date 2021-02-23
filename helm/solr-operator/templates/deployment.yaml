@@ -37,8 +37,9 @@ spec:
       serviceAccountName: {{ include "solr-operator.serviceAccountName" . }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
+        image: {{ .Values.image.url }} 
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        pullSecret: {{ .Values.image.pullSecret }}
         args:
         - -zk-operator={{ .Values.useZkOperator }}
         {{- if .Values.watchNamespaces }}
