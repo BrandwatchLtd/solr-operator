@@ -35,11 +35,14 @@ spec:
         controller-tools.k8s.io: "1.0"
     spec:
       serviceAccountName: {{ include "solr-operator.serviceAccountName" . }}
+      {{- if .Values.image.pullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.image.pullSecret }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: {{ .Values.image.url }} 
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        pullSecret: {{ .Values.image.pullSecret }}
         args:
         - -zk-operator={{ .Values.useZkOperator }}
         {{- if .Values.watchNamespaces }}
