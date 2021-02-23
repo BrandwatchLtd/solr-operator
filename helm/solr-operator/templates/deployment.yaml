@@ -41,9 +41,13 @@ spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
+      {{- if .Values.image.pullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.image.pullSecret }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
+        image: {{ .Values.image.url }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args:
         # DEPRECATION: v0.4.0 - Remove (eq "true" .Values.useZkOperator)

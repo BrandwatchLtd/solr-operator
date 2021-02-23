@@ -22,9 +22,9 @@ replicaCount: 1
 namespace: solr0
 
 image:
-  repository: apache/solr-operator
-  tag: v0.4.0-prerelease
-  pullPolicy: IfNotPresent
+  url: apache/solr-operator:v0.4.0-prerelease
+  pullPolicy: Always
+  pullSecret: null
 
 nameOverride: "solr-operator"
 fullnameOverride: "solr-operator"
