@@ -160,7 +160,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - networking
+  - networking.k8s.io
   resources:
   - ingresses
   verbs:
@@ -172,7 +172,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - networking
+  - networking.k8s.io
   resources:
   - ingresses/status
   verbs:
