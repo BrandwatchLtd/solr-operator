@@ -45,7 +45,7 @@ def slipstreamDeploy(app, chartVersion = null) {
         withEnv(["PATH+SS=${ssHome}"]) {
             sh (
                 label: "Notify slipstream and deploy to stage",
-                script: "slipstream deploy stage ${app} --tag ${buildTag} --wait --quiet"
+                script: "slipstream deploy stage platform ${app} --tag ${buildTag} --wait --quiet"
             )
         }
     }
