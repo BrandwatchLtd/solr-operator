@@ -10,14 +10,21 @@ def buildAndDeployDockerImage() {
     version = sh (script: "date '+%Y%m%d.%H%M%S'", returnStdout: true)
 
     docker.withRegistry("https://eu.gcr.io", "gcr:${gcpProject}") {
+
         sh """ docker build \
-            --build-arg REPO=${gcpProject} \
             --build-arg VERSION="${version}" \
-            --build-arg GIT_SHA="${gitSha}" \
+            --build-arg GIT_SHA="${gitSha}" . \
             --build-arg BIN=solr-operator \
-            -t ${imageName}:${buildTag} \
-            -f build/Dockerfile.build .
+            -t solr-operator-build \
+            -f ./build/Dockerfile.build
         """
+
+        sh """ docker build \
+            --build-arg BUILD_IMG=solr-operator-build . \
+            -t ${imageName}:${buildTag} \
+            -f ./build/Dockerfile.slim
+        """
+
         img = docker.image("${imageName}:${buildTag}")
         img.push()
         img.push(buildTag)
