@@ -22,7 +22,7 @@ replicaCount: 1
 namespace: solr0
 
 image:
-  url: apache/solr-operator:v0.2.8
+  url: apache/solr-operator:v0.3.0
   pullPolicy: Always
   pullSecret: null
 
