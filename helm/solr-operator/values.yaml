@@ -64,12 +64,13 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name:
 
-resources:
-  limits:
-    cpu: 400m
-    memory: 500Mi
-  requests:
-    cpu: 100m
-    memory: 100Mi
-
+# Various Pod Options to customize the runtime of the operator
+resources: {}
 envVars: []
+labels: {}
+annotations: {}
+nodeSelector: {}
+affinity: {}
+tolerations: []
+priorityClassName: ""
+sidecarContainers: []
