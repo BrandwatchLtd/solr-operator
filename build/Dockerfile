@@ -33,6 +33,7 @@ COPY build/build.sh build/build.sh
 COPY Makefile LICENSE NOTICE build/LICENSE-ADDITION build/NOTICE-ADDITION ./
 
 # Add additional binary-release-only information to the LICENSE and NOTICES files
+# hadolint ignore=SC2028
 RUN echo "\n\n" >> LICENSE; \
     cat LICENSE-ADDITION >> LICENSE; \
     echo "\n\n" >> NOTICE; \

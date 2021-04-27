@@ -81,7 +81,7 @@ prepare: fmt generate manifests fetch-licenses-list mod-tidy
 
 # Build solr-operator binary
 build: generate
-	BIN=${BIN} GIT_SHA=${GIT_SHA} ARCH=${ARCH} GOOS=${GOOS} ./build/build.sh
+	BIN=solr-operator GIT_SHA=${GIT_SHA} ARCH=${ARCH} GOOS=${GOOS} ./build/build.sh
 
 # Run against the configured Kubernetes cluster in ~/.kube/config
 run: generate fmt manifests

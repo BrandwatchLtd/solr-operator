@@ -47,7 +47,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: {{ .Values.image.url }} 
+        image: {{ .Values.image.url }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         args:
         # DEPRECATION: v0.4.0 - Remove (eq "true" .Values.useZkOperator)

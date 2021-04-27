@@ -1,33 +1,26 @@
 branchName = env.BRANCH_NAME.replace('/', '_')
-buildTag = "build.${env.BUILD_NUMBER}"
+buildTag = (env.BRANCH_NAME == "main") ? "build.${env.BUILD_NUMBER}" : "build.${env.BUILD_NUMBER}.branchName"
 gcpProject = "bw-prod-platform0"
 imageName = "eu.gcr.io/${gcpProject}/solr-operator"
 
 def buildAndDeployDockerImage() {
-    hadolint("build/Dockerfile.build")
+    hadolint("build/Dockerfile")
 
     gitSha = sh (script: "git rev-parse HEAD", returnStdout: true)
-    version = sh (script: "date '+%Y%m%d.%H%M%S'", returnStdout: true)
 
     docker.withRegistry("https://eu.gcr.io", "gcr:${gcpProject}") {
 
         sh """ docker build \
-            --build-arg VERSION="${version}" \
-            --build-arg GIT_SHA="${gitSha}" . \
-            --build-arg BIN=solr-operator \
-            -t solr-operator-build \
-            -f ./build/Dockerfile.build
-        """
-
-        sh """ docker build \
-            --build-arg BUILD_IMG=solr-operator-build . \
+            --build-arg GIT_SHA="${gitSha}" \
             -t ${imageName}:${buildTag} \
-            -f ./build/Dockerfile.slim
+            -f ./build/Dockerfile .
         """
 
-        img = docker.image("${imageName}:${buildTag}")
-        img.push()
-        img.push(buildTag)
+        if (env.BRANCH_NAME == "main") {
+            img = docker.image("${imageName}:${buildTag}")
+            img.push()
+            img.push("latest")
+        }
     }
 }
 
@@ -76,12 +69,12 @@ node {
         kubeval.validateChart("helm/solr-operator")
     }
 
+    docker_stage = (env.BRANCH_NAME == "main") ? "Deploy docker image" : "Build docker image"
+    stage(docker_stage) {
+        buildAndDeployDockerImage()
+    }
+
     if (env.BRANCH_NAME == "main") {
-
-      stage("Deploy docker image") {
-          buildAndDeployDockerImage()
-      }
-
       stage("Deploy helm chart") {
           def chartVersion = deployHelmChart("helm/solr-operator", "bw-prod-platform0")
           slipstreamDeploy("solr-operator", chartVersion)

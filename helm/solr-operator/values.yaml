@@ -22,7 +22,7 @@ replicaCount: 1
 namespace: solr0
 
 image:
-  url: apache/solr-operator:v0.3.0
+  url: eu.gcr.io/bw-prod-platform0/solr-operator:latest
   pullPolicy: Always
   pullSecret: null
 
