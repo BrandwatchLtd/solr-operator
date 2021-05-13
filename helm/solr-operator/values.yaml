@@ -71,11 +71,7 @@ labels: {}
 annotations: {}
 nodeSelector: {}
 affinity: {}
-tolerations:
-  - effect: NoSchedule
-    key: solr
-    operator: Equal
-    value: "true"
+tolerations: []
 priorityClassName: ""
 sidecarContainers: []
 
